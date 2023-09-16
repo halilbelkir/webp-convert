@@ -24,8 +24,8 @@ config/filesystem içerisinde ki disks dizinin altına aşağıdaki array dizini
 
 'cache' => [
                 'driver' => 'local',
-                'root' => public_path() . '/upload/cache',
-                'url' => '/upload/cache',
+                'root'   => public_path() . '/upload/cache',
+                'url'    => '/upload/cache',
             ],
 ```
 
