@@ -17,21 +17,12 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "autoload": {
-    "psr-4": {
-      "http\\": "http"
-    }
+    "files": ["http/WebpConvertServiceProvider.php"]
   },
   "config": {
     "sort-packages": true,
     "allow-plugins": {
       "henzeb/composer-link": true
-    }
-  },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "http\\WebpConvertServiceProvider"
-      ]
     }
   }
 }
