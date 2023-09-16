@@ -25,8 +25,9 @@ class WebpConvertServiceProvider extends ServiceProvider
     }
     protected function registerPublishables(): void
     {
+        //<vendor/halilbelkir/img-webp-convert/http/../config/voyager-duplicate.php>.
         $this->publishes([
-            __DIR__ . '/../config/voyager-duplicate.php' => config_path('img-webp-convert.php'),
+            __DIR__ . '/../config/img-webp-convert.php' => config_path('img-webp-convert.php'),
         ], 'config');
     }
 }
