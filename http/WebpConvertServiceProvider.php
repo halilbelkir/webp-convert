@@ -19,7 +19,10 @@ use Illuminate\Support\ServiceProvider;
  */
 class WebpConvertServiceProvider extends ServiceProvider
 {
-
+    public function boot()
+    {
+        $this->registerPublishables();
+    }
     protected function registerPublishables(): void
     {
         $this->publishes([
