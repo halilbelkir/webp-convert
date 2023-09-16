@@ -20,5 +20,11 @@
     "psr-4": {
       "halilbelkir\\webp-convert\\": "src"
     }
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "henzeb/composer-link": true
+    }
   }
 }
