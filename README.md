@@ -19,11 +19,21 @@ php artisan vendor:publish --provider="http\\WebpConvertServiceProvider" --force
 config/filesystem içerisinde ki disks dizinin altına aşağıdaki array dizinini ekleyiniz.
 
 ```bash
+
 'cache' => [
                 'driver' => 'local',
                 'root' => public_path() . '/upload/cache',
                 'url' => '/upload/cache',
             ],
+```
+
+## Config App Düzenleme
+
+config/app içerisinde ki aliases dizinin altına aşağıdaki tanımlamayı ekleyiniz.
+
+```bash
+
+"WebpConvert" => \src\ImageHelper::class
 ```
 
 ## Kullanımı
