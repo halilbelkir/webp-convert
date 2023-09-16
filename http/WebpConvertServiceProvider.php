@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace http;
 
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -23,13 +22,11 @@ class WebpConvertServiceProvider extends ServiceProvider
     public function boot()
     {
         $value = [
-            'cache' => [
-                'driver' => 'local',
-                'root' => public_path() . '/upload/cache',
-                'url' => '/upload/cache',
-            ],
+            'driver' => 'local',
+            'root' => public_path() . '/upload/cache',
+            'url' => '/upload/cache',
         ];
-        Config::set('filesystem.disks',$value);
+        Config::set('filesystem.disks.cache',$value);
 
         $this->registerPublishables();
     }
