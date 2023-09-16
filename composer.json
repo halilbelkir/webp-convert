@@ -15,5 +15,10 @@
     "illuminate/support": "^7|^8|^9|^10"
   },
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "halilbelkir\\webp-convert\\": "src"
+    }
+  }
 }
