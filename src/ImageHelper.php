@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Library\Media;
+namespace src;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -14,7 +14,7 @@ class ImageHelper
 
     public static function getImage($image, $width = false, $height = false,$name=null,$status=null,$resize = false,$extensionType = false):string
     {
-        if ($status == 2)
+        if ($status == 1)
         {
             $ch = curl_init($image); //pass your pdf here
 
@@ -60,7 +60,7 @@ class ImageHelper
             }
             else
             {
-                if ($status == 2)
+                if ($status == 1)
                 {
                     $ch = curl_init($image); //pass your pdf here
 
@@ -74,7 +74,7 @@ class ImageHelper
                 }
                 else
                 {
-                    if (!file_exists($image)) $image = 'assets/images/no-image.webp';
+                    if (!file_exists($image)) $image = config('img-webp-convert.no-image');
                 }
             }
 

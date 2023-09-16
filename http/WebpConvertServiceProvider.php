@@ -21,13 +21,6 @@ class WebpConvertServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $value = [
-            'driver' => 'local',
-            'root' => public_path() . '/upload/cache',
-            'url' => '/upload/cache',
-        ];
-        Config::set('filesystem.disks.cache',$value);
-
         $this->registerPublishables();
     }
     protected function registerPublishables(): void

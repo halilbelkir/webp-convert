@@ -2,5 +2,6 @@
 
 return
 [
-    "disk" => 'cache'
+    "disk"     => 'cache',
+    "no-image" => 'assets/images/no-image.webp'
 ];
