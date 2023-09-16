@@ -26,5 +26,12 @@
     "allow-plugins": {
       "henzeb/composer-link": true
     }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "img-webp-convert\\http\\WebpConvertServiceProvider"
+      ]
+    }
   }
 }
