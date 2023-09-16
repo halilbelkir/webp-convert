@@ -1,9 +1,11 @@
-# img-webp-convert
+# webp-convert
+
+Laravel'de çalışan HTML etiketi olan 'img' etiketinin oluşturulması ve jpg,png vs. resim formatlarının webp formatına dönüştüren bir kütüphanedir.
 
 ## Gerekli olan yüklemeler
 
-*   Composer Installed
-*   [Install Laravel](https://laravel.com/docs/installation)
+*   Composer Yüklendi
+*   [Laravel Yükle](https://laravel.com/docs/installation)
 ## Yükleme
 
 ```bash
