@@ -7,6 +7,7 @@ namespace http;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
+
 /**
  * Class VoyagerDuplicateServiceProvider
  *

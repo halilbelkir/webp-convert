@@ -8,7 +8,6 @@ use Intervention\Image\Facades\Image;
 
 class ImageHelper
 {
-
     private static $disk        = config('img-webp-convert.disk');
     private static $browserList = ['Chrome' => 8, 'Mozilla' => 64, 'Safari' => '13.2', 'Opera' => '10.2', 'Edge' => 17, 'Android' => 3];
 
