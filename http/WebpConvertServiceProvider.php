@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Joy\VoyagerDuplicate;
+namespace http;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
