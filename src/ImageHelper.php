@@ -10,9 +10,14 @@ use halilBelkir\WebConvert\Browser;
 
 class ImageHelper
 {
-    private static $disk        = Config::get('img-webp-convert.disk');
-    private static $browserList = ['Chrome' => 8, 'Mozilla' => 64, 'Safari' => '13.2', 'Opera' => '10.2', 'Edge' => 17, 'Android' => 3];
+    private static $disk;
+    private static $browserList;
 
+    public function __construct()
+    {
+        self::$disk        = Config::get('img-webp-convert.disk');
+        self::$browserList = ['Chrome' => 8, 'Mozilla' => 64, 'Safari' => '13.2', 'Opera' => '10.2', 'Edge' => 17, 'Android' => 3];
+    }
     public static function getImage($image, $width = false, $height = false,$name=null,$status=null,$resize = false,$extensionType = false):string
     {
         if ($status == 1)
