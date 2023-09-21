@@ -2,22 +2,21 @@
 
 namespace halilBelkir\WebConvert;
 
+use halilBelkir\WebConvert\Browser;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
-use halilBelkir\WebConvert\Browser;
 
 class ImageHelper
 {
-    private static $disk;
-    private static $browserList;
+    private static $browserList = ['Chrome' => 8, 'Mozilla' => 64, 'Safari' => '13.2', 'Opera' => '10.2', 'Edge' => 17, 'Android' => 3];
 
-    public function __construct()
+    public static function getDisk()
     {
-        self::$disk        = Config::get('img-webp-convert.disk');
-        self::$browserList = ['Chrome' => 8, 'Mozilla' => 64, 'Safari' => '13.2', 'Opera' => '10.2', 'Edge' => 17, 'Android' => 3];
+        return Config::get('img-webp-convert.disk');
     }
+
     public static function getImage($image, $width = false, $height = false,$name=null,$status=null,$resize = false,$extensionType = false):string
     {
         if ($status == 1)
@@ -52,13 +51,14 @@ class ImageHelper
             self::resizeImg($image, $width, $height, $extension, $fileName, $resize);
         }
 
-        return asset('upload/cache/'.$fileName);
+        return Storage::disk(self::getDisk())->url($fileName);
     }
 
     public static function createTag($image,$param=[],$attr=[],$type='',$name = null,$status=null)
     {
 
-        try {
+        try
+        {
             //sting data için img tag dan değer bulunuyor
             if(isset($param['string']) && $param['string'] == true)
             {
@@ -90,10 +90,10 @@ class ImageHelper
             $extension = self::suitableExtension($imageInfo);
 
             //attribute etiketleri ayarla
-            $attribute      = self::createAttribute($attr);
-
+            $attribute = self::createAttribute($attr);
             $source    = '';
-            $resize = isset($param['resize']) ? $param['resize'] : false;
+            $resize    = isset($param['resize']) ? $param['resize'] : false;
+
             for ($p = 0; $p < count($param['width']); $p++)
             {
                 $width  = $param['width'][$p];
@@ -110,7 +110,8 @@ class ImageHelper
                     self::resizeImg($image, $width, $height, $extension, $fileName, $resize);
                 }
 
-                $img            = asset('upload/cache/'.$fileName);
+
+                $img            = Storage::disk(self::getDisk())->url($fileName);
                 $srcSet[]       = $img.' '.$width.'w';
                 $newFileName[]  = $fileName;
 
@@ -119,23 +120,23 @@ class ImageHelper
 
 
             //etiketler atanıyor
-            $tagSrc         = 'src="'. asset('upload/cache/'.$newFileName[0]).'"';
-            $tagDataSrc     = 'data-src="'.asset('upload/cache/'.$newFileName[0]).'"';
-            $tagSrcSet      = count($srcSet) > 1 ? 'srcset="'.implode(", ", $srcSet).'"' : '';
-            $tagWidth       = 'width="'.max($param['width']).'"';
-            $tagHeight      = 'height="'.$param['height'][array_search( max($param['width']), $param['width'])].'"';
+            $tagSrc     = 'src="'. Storage::disk(self::getDisk())->url($newFileName[0]).'"';
+            $tagDataSrc = 'data-src="'.Storage::disk(self::getDisk())->url($newFileName[0]).'"';
+            $tagSrcSet  = count($srcSet) > 1 ? 'srcset="'.implode(", ", $srcSet).'"' : '';
+            $tagWidth   = 'width="'.max($param['width']).'"';
+            $tagHeight  = 'height="'.$param['height'][array_search( max($param['width']), $param['width'])].'"';
 
             //tag tipi isteğine göre tag oluşturuluyor
             switch ($type)
             {
                 case 'picture' :
-                    $imgTag         = '<picture>';
-                    $imgTag        .= $source;
-                    $imgTag        .= '<img '.$tagSrc.' '.$tagWidth.' '.$tagHeight.' '.$tagDataSrc.' '.$attribute.'>';
-                    $imgTag        .= '</picture>';
+                    $imgTag   = '<picture>';
+                    $imgTag  .= $source;
+                    $imgTag  .= '<img '.$tagSrc.' '.$tagWidth.' '.$tagHeight.' '.$tagDataSrc.' '.$attribute.'>';
+                    $imgTag  .= '</picture>';
                     break;
                 case 'lazy' :
-                    //$tagSrc    = 'src="'. asset(config('app.loading_image')) .'"';
+                    $tagSrc    = 'src="'. config('img-webp-convert.loading-image') .'"';
                     $tagSrc    = '';
                     $imgTag    = '<img '.$tagSrc.' '.$tagWidth.' '.$tagHeight.' '.$tagDataSrc.' '.$attribute.' '.$tagSrcSet.'>';
                     break;
@@ -168,8 +169,7 @@ class ImageHelper
 
     public static function suitableExtension($image,$extensionType = false):string
     {
-        $browser = new Browser();
-
+        $browser        = new Browser();
         $browserList    = self::$browserList;
         $browserName    = $browser->getBrowser();
         $browserVersion = current(explode('.', $browser->getVersion()));
@@ -188,19 +188,23 @@ class ImageHelper
 
     public static function checkImage($image):bool
     {
-        return Storage::disk(self::$disk)->exists($image);
+        return Storage::disk(self::getDisk())->exists($image);
     }
 
     public static function resizeImg($image, $width, $height, $extension, $fileName, $resize)
     {
         $img      = Image::make($image);
-        if($resize){
+
+        if($resize)
+        {
             $resize   = $img->resize($width, $height, function ($constraint) {$constraint->aspectRatio();$constraint->upsize();});
-        }else{
+        }
+        else
+        {
             $resize   = $img->fit($width, $height, function ($constraint) {$constraint->aspectRatio();$constraint->upsize();});
         }
 
-        $storage  = Storage::disk(self::$disk);
+        $storage  = Storage::disk(self::getDisk());
 
         $img->encode($extension,100);
         $storage->put($fileName, $resize->__toString());
@@ -270,7 +274,9 @@ class ImageHelper
         $path = asset('assets/images/default.jpg');
 
         $image = collect(self::getStringImgList($image))->first();
-        if($image){
+
+        if($image)
+        {
             $path = self::getTagAttr($image);
         }
 

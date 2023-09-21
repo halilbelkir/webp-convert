@@ -9,11 +9,11 @@
 ## Yükleme
 
 ```bash
-
 composer require halilbelkir/img-webp-convert
+```
 
-php artisan vendor:publish --provider="http\\WebpConvertServiceProvider" --force
-
+```bash
+php artisan vendor:publish --provider="halilBelkir\WebConvert\WebpConvertServiceProvider" --force
 ```
 
 ## Filesystems Düzenleme 
@@ -35,7 +35,7 @@ config/app içerisinde ki aliases dizinin altına aşağıdaki tanımlamayı ekl
 
 ```bash
 
-"WebpConvert" => \src\ImageHelper::class
+"WebpConvert" => halilBelkir\WebConvert\ImageHelper::class
 ```
 
 ## Kullanımı
