@@ -18,7 +18,7 @@
   "prefer-stable": true,
   "autoload": {
     "psr-4": {
-      "halilBelkir\\WebConvert": "src"
+      "halilBelkir\\WebConvert\\": "src"
     }
   },
   "config": {
