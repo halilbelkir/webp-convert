@@ -2,6 +2,7 @@
 
 namespace halilBelkir\WebConvert;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
@@ -9,7 +10,7 @@ use halilBelkir\WebConvert\Browser;
 
 class ImageHelper
 {
-    private static $disk        = config('img-webp-convert.disk');
+    private static $disk        = Config::get('img-webp-convert.disk');
     private static $browserList = ['Chrome' => 8, 'Mozilla' => 64, 'Safari' => '13.2', 'Opera' => '10.2', 'Edge' => 17, 'Android' => 3];
 
     public static function getImage($image, $width = false, $height = false,$name=null,$status=null,$resize = false,$extensionType = false):string
