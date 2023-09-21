@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace src;
+namespace halilBelkir\WebConvert;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
