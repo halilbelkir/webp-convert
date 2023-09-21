@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Library\Media;
+namespace halilBelkir\WebConvert;
 
 class Browser
 {

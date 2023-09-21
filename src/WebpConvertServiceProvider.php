@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace http;
+namespace src;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;

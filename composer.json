@@ -18,7 +18,7 @@
   "prefer-stable": true,
   "autoload": {
     "psr-4": {
-      "http\\": "http"
+      "halilBelkir\\WebConvert": "src"
     }
   },
   "config": {
@@ -30,7 +30,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "http\\WebpConvertServiceProvider"
+        "halilBelkir\\WebConvert\\WebpConvertServiceProvider"
       ]
     }
   }

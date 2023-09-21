@@ -1,10 +1,11 @@
 <?php
 
-namespace src;
+namespace halilBelkir\WebConvert;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
+use halilBelkir\WebConvert\Browser;
 
 class ImageHelper
 {
