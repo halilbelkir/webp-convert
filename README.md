@@ -1,6 +1,7 @@
 # webp-convert
 
 **Laravel'de çalışan HTML etiketi olan 'img' etiketinin oluşturulması ve jpg,png vs. resim formatlarının webp formatına dönüştüren bir kütüphanedir.**
+** https://packagist.org/packages/halilbelkir/img-webp-convert
 
 ## Gerekli olan yüklemeler
 
