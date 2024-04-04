@@ -241,7 +241,7 @@ class ImageHelper
 
         if (empty($filename))
         {
-            $filename = Str::slug(config('app.custom_title'),'-');
+            $filename = Str::slug(config('img-webp-convert.custom-title'),'-');
         }
         else
         {
@@ -249,7 +249,7 @@ class ImageHelper
         }
 
         //return $filename.'.'.$extension;
-        return $filename.$newFileName.'.'.$extension;
+        return $filename.rand().'.'.$extension;
     }
 
     public static function getStringImgList($string):array
