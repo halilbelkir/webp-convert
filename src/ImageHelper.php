@@ -249,7 +249,7 @@ class ImageHelper
         }
 
         //return $filename.'.'.$extension;
-        return $filename.rand().'.'.$extension;
+        return $filename.'.'.$extension;
     }
 
     public static function getStringImgList($string):array
