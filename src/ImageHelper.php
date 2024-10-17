@@ -10,6 +10,7 @@ use Intervention\Image\Image;
 use Intervention\Image\ImageManager;
 
 
+
 class ImageHelper
 {
 
