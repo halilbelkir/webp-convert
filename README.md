@@ -32,11 +32,13 @@ config/filesystem içerisinde ki disks dizinin altına aşağıdaki array dizini
 
 ## Config App Düzenleme
 
-config/app içerisinde ki aliases dizinin altına aşağıdaki tanımlamayı ekleyiniz.
+app/Providers/AppServiceProvider içerisinde ki register fonksiyonun altına aşağıdaki tanımlamayı ekleyiniz.
 
 ```bash
 
-"WebpConvert" => halilBelkir\WebConvert\ImageHelper::class
+$loader = AliasLoader::getInstance();
+$loader->alias('WebpConvert', halilBelkir\WebConvert\ImageHelper::class);
+$loader->alias('Image', Image::class);
 ```
 
 ## Kullanımı
