@@ -6,10 +6,14 @@ use halilBelkir\WebConvert\Browser;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image;
+use Intervention\Image\Image;
+use Intervention\Image\ImageManager;
+
 
 class ImageHelper
 {
+
+
     private static $browserList = ['Chrome' => 8, 'Mozilla' => 64, 'Safari' => '13.2', 'Opera' => '10.2', 'Edge' => 17, 'Android' => 3];
 
     public static function getDisk()
@@ -56,7 +60,6 @@ class ImageHelper
 
     public static function createTag($image,$param=[],$attr=[],$type='',$name = null,$status=null)
     {
-
         try
         {
             //sting data için img tag dan değer bulunuyor
@@ -110,14 +113,12 @@ class ImageHelper
                     self::resizeImg($image, $width, $height, $extension, $fileName, $resize);
                 }
 
-
                 $img            = Storage::disk(self::getDisk())->url($fileName);
                 $srcSet[]       = $img.' '.$width.'w';
                 $newFileName[]  = $fileName;
 
                 $source .= '<source media="(max-width: '.$width.'px)" srcset="'.$img.'" />';
             }
-
 
             //etiketler atanıyor
             $tagSrc     = 'src="'. Storage::disk(self::getDisk())->url($newFileName[0]).'"';
@@ -152,7 +153,7 @@ class ImageHelper
         }
         catch (\Exception $exception)
         {
-            //dd($exception, $image, $imageInfo);
+            //dd($exception);
         }
 
     }
@@ -193,21 +194,21 @@ class ImageHelper
 
     public static function resizeImg($image, $width, $height, $extension, $fileName, $resize)
     {
-        $img      = Image::make($image);
+        $img = ImageManager::gd()->read($image);
 
         if($resize)
         {
-            $resize   = $img->resize($width, $height, function ($constraint) {$constraint->aspectRatio();$constraint->upsize();});
+            $resize   = $img->resize($width, $height);
         }
         else
         {
-            $resize   = $img->fit($width, $height, function ($constraint) {$constraint->aspectRatio();$constraint->upsize();});
+            $resize   = $img->cover($width, $height, 'center');
         }
 
-        $storage  = Storage::disk(self::getDisk());
+        $storage = Storage::disk(self::$disk);
+        $encode  = $resize->encodeByExtension($extension);
 
-        $img->encode($extension,100);
-        $storage->put($fileName, $resize->__toString());
+        $storage->put($fileName, $encode->toString());
 
     }
 
@@ -248,7 +249,7 @@ class ImageHelper
             $filename = Str::slug($filename,'-');
         }
 
-        //return $filename.'.'.$extension;
+        //return $filename.'-'.$newFileName.'.'.$extension;
         return $filename.'.'.$extension;
     }
 
@@ -272,12 +273,10 @@ class ImageHelper
     public static function getFirstImage($image)
     {
         //default jpg
-        $path = asset('assets/images/default.jpg');
+        $path = config('img-webp-convert.empty_image');
 
         $image = collect(self::getStringImgList($image))->first();
-
-        if($image)
-        {
+        if($image){
             $path = self::getTagAttr($image);
         }
 
