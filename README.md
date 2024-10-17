@@ -7,7 +7,12 @@
 
 *   Composer Yüklendi
 *   [Laravel Yükle](https://laravel.com/docs/installation)
+
 ## Yükleme
+
+```bash
+composer require intervention/image
+```
 
 ```bash
 composer require halilbelkir/img-webp-convert
@@ -43,9 +48,16 @@ $loader->alias('Image', Image::class);
 
 ## Kullanımı
 
+**Eğer kendi sunucunuzda ise <br>**
+
+$resimYolu =  'assets/images/logo.png'; <br><br>
+
+**Eğer farklı sunucuda ise**
+
+$resimYolu = 'http://127.0.0.1:8000/assets/images/logo.png';
 ```bash
 
-  {!! WebpConvert::createTag(resim yolu,['width' =>[1440,768,500], 'height' => [500,400,400]],['alt' => 'alt','title' => 'title','class' => 'class adı'],'lazy load kullanılacak ise buraya sadece "lazy" yazmanız yeterlidir','resmin yeni adı',1 olursa başka domainden kendi dosyanıza indirir ) !!}
+  {!! WebpConvert::createTag($resimYolu,['width' =>[1440,768,500], 'height' => [500,400,400]],['alt' => 'alt','title' => 'title','class' => 'class adı'],'lazy load kullanılacak ise buraya sadece "lazy" yazmanız yeterlidir','resmin yeni adı',1 olursa başka domainden kendi dosyanıza indirir ) !!}
   
 ```
 

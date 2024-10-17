@@ -6,6 +6,7 @@ use halilBelkir\WebConvert\Browser;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Intervention\Image\Drivers\Imagick\Driver;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManager;
 
@@ -111,7 +112,7 @@ class ImageHelper
                 if (!self::checkImage($fileName))
                 {
                     //Img düzenle
-                    self::resizeImg($image, $width, $height, $extension, $fileName, $resize);
+                    self::resizeImg($image, $width, $height, $extension, $fileName, $resize,$status);
                 }
 
                 $img            = Storage::disk(self::getDisk())->url($fileName);
@@ -154,7 +155,7 @@ class ImageHelper
         }
         catch (\Exception $exception)
         {
-            //dd($exception);
+            dd($exception);
         }
 
     }
@@ -193,9 +194,19 @@ class ImageHelper
         return Storage::disk(self::getDisk())->exists($image);
     }
 
-    public static function resizeImg($image, $width, $height, $extension, $fileName, $resize)
+    public static function resizeImg($image, $width, $height, $extension, $fileName, $resize,$status)
     {
-        $img = ImageManager::gd()->read($image);
+        $manager = new ImageManager(new Driver());
+
+        if ($status == 1)
+        {
+            $img = $manager->read(file_get_contents($image));
+        }
+        else
+        {
+
+            $img = $manager->read(file_get_contents(public_path($image)));
+        }
 
         if($resize)
         {
@@ -206,7 +217,7 @@ class ImageHelper
             $resize   = $img->cover($width, $height, 'center');
         }
 
-        $storage = Storage::disk(self::$disk);
+        $storage = Storage::disk(self::getDisk());
         $encode  = $resize->encodeByExtension($extension);
 
         $storage->put($fileName, $encode->toString());
@@ -274,10 +285,12 @@ class ImageHelper
     public static function getFirstImage($image)
     {
         //default jpg
-        $path = config('img-webp-convert.empty_image');
+        $path = config('img-webp-convert.no-image');
 
         $image = collect(self::getStringImgList($image))->first();
-        if($image){
+
+        if($image)
+        {
             $path = self::getTagAttr($image);
         }
 
