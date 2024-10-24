@@ -54,7 +54,7 @@ class ImageHelper
         if (!self::checkImage($fileName))
         {
             //Img düzenle
-            self::resizeImg($image, $width, $height, $extension, $fileName, $resize);
+            self::resizeImg($image, $width, $height, $extension, $fileName, $resize,$status);
         }
 
         return Storage::disk(self::getDisk())->url($fileName);
