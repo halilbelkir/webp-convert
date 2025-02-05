@@ -85,7 +85,7 @@ class ImageHelper
                 }
                 else
                 {
-                    if (!file_exists($image)) $image = config('img-webp-convert.no-image');
+                    if (!file_exists(public_path($image))) $image = config('img-webp-convert.no-image');
                 }
             }
 
