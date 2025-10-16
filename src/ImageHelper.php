@@ -144,7 +144,6 @@ class ImageHelper
                     break;
                 case 'lazy' :
                     $tagSrc    = 'src="'. config('img-webp-convert.loading-image') .'"';
-                    $tagSrc    = '';
                     $imgTag    = '<img '.$tagSrc.' '.$tagWidth.' '.$tagHeight.' '.$tagDataSrc.' '.$attribute.' '.$tagSrcSet.'>';
                     break;
                 case 'slider' :
