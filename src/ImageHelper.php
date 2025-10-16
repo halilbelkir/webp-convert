@@ -81,7 +81,11 @@ class ImageHelper
                     $retcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
                     curl_close($ch);
 
-                    if( $retcode !=200 )  $image = config('img-webp-convert.no-image'); $status = null;
+                    if( $retcode !=200 )
+                    {
+                        $image  = config('img-webp-convert.no-image');
+                        $status = null;
+                    }
                 }
                 else
                 {
