@@ -130,9 +130,11 @@ class ImageHelper
             $tagSrc     = 'src="'. Storage::disk(self::getDisk())->url($newFileName[0]).'"';
             $tagDataSrc = 'data-src="'.Storage::disk(self::getDisk())->url($newFileName[0]).'"';
             $tagSrcSet  = count($srcSet) > 1 ? 'srcset="'.implode(", ", $srcSet).'"' : '';
-            $tagWidth   = 'width="'.max($param['width']).'"';
-            $tagHeight  = 'height="'.$param['height'][array_search( max($param['width']), $param['width'])].'"';
-            $loadingImage = "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='\".$tagWidth.\"'%20height='\".$tagHeight.\"'%20viewBox='0%200%20265%20100'%3E%3Crect%20width='\".$tagWidth.\"'%20height='\".$tagHeight.\"'%20fill='%23e5e7eb'/%3E%3C/svg%3E";
+            $maxWidth   = max($param['width']);
+            $maxHeight  = $param['height'][array_search( $maxWidth, $param['width'])];
+            $tagWidth   = 'width="'.$maxWidth.'"';
+            $tagHeight  = 'height="'.$maxHeight.'"';
+            $loadingImage = "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='\".$maxWidth.\"'%20height='\".$maxHeight.\"'%20viewBox='0%200%20265%20100'%3E%3Crect%20width='\".$maxWidth.\"'%20height='\".$maxHeight.\"'%20fill='%23e5e7eb'/%3E%3C/svg%3E";
             //tag tipi isteğine göre tag oluşturuluyor
             switch ($type)
             {
