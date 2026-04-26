@@ -214,7 +214,7 @@ class ImageHelper
 
         if($resize)
         {
-            $resize   = $img->resize($width, $height);
+            $resize = $img->scaleDown($width);
         }
         else
         {
