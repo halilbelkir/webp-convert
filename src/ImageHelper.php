@@ -58,7 +58,7 @@ class ImageHelper
         return Storage::disk(self::getDisk())->url($fileName);
     }
 
-    public static function createTag($image,$param=[],$attr=[],$type='',$name = null,$status=null)
+    public static function createTag($image,$param=[],$attr=[],$type='',$name = null,$status=null,$priority = null)
     {
         try
         {
@@ -125,35 +125,34 @@ class ImageHelper
                 $source .= '<source media="(max-width: '.$width.'px)" srcset="'.$img.'" />';
             }
 
-            //etiketler atanıyor
-            $tagSrc     = 'src="'. Storage::disk(self::getDisk())->url($newFileName[0]).'"';
-            $tagDataSrc = 'data-src="'.Storage::disk(self::getDisk())->url($newFileName[0]).'"';
-            $tagSrcSet  = count($srcSet) > 1 ? 'srcset="'.implode(", ", $srcSet).'"' : '';
-            $maxWidth   = max($param['width']);
-            $maxHeight  = $param['height'][array_search( $maxWidth, $param['width'])];
-            $tagWidth   = 'width="'.$maxWidth.'"';
-            $tagHeight  = 'height="'.$maxHeight.'"';
-            
+            $tagSrc      = 'src="'. Storage::disk(self::getDisk())->url($newFileName[0]).'"';
+            $tagDataSrc  = 'data-src="'.Storage::disk(self::getDisk())->url($newFileName[0]).'"';
+            $tagSrcSet   = count($srcSet) > 1 ? 'srcset="'.implode(", ", $srcSet).'"' : '';
+            $maxWidth    = max($param['width']);
+            $maxHeight   = $param['height'][array_search( $maxWidth, $param['width'])];
+            $tagWidth    = 'width="'.$maxWidth.'"';
+            $tagHeight   = 'height="'.$maxHeight.'"';
+            $tagPriority = in_array($priority, ['high', 'low', 'auto']) ? 'fetchpriority="'.$priority.'"' : '';
+
             $loadingImage = "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='".$maxWidth."'%20height='".$maxHeight."'%20viewBox='0%200%20265%20100'%3E%3Crect%20width='".$maxWidth."'%20height='".$maxHeight."'%20fill='%23e5e7eb'/%3E%3C/svg%3E";
-            
-            //tag tipi isteğine göre tag oluşturuluyor
+
             switch ($type)
             {
                 case 'picture' :
                     $imgTag   = '<picture>';
                     $imgTag  .= $source;
-                    $imgTag  .= '<img '.$tagSrc.' '.$tagWidth.' '.$tagHeight.' '.$tagDataSrc.' '.$attribute.'>';
+                    $imgTag  .= '<img '.$tagSrc.' '.$tagWidth.' '.$tagHeight.' '.$tagDataSrc.' '.$attribute.' '.$tagPriority.'>';
                     $imgTag  .= '</picture>';
                     break;
                 case 'lazy' :
                     $tagSrc    = 'src="'. $loadingImage .'"';
-                    $imgTag    = '<img '.$tagSrc.' '.$tagWidth.' '.$tagHeight.' '.$tagDataSrc.' '.$attribute.' '.$tagSrcSet.'>';
+                    $imgTag    = '<img '.$tagSrc.' '.$tagWidth.' '.$tagHeight.' '.$tagDataSrc.' '.$attribute.' '.$tagSrcSet.' '.$tagPriority.'>';
                     break;
                 case 'slider' :
-                    $imgTag    = '<img '.$tagWidth.' '.$tagHeight.' '.$tagDataSrc.' '.$attribute.'>';
+                    $imgTag    = '<img '.$tagWidth.' '.$tagHeight.' '.$tagDataSrc.' '.$attribute.' '.$tagPriority.'>';
                     break;
                 default :
-                    $imgTag    = '<img '.$tagSrc.' '.$tagWidth.' '.$tagHeight.' '.$attribute.' '.$tagSrcSet.'>';
+                    $imgTag    = '<img '.$tagSrc.' '.$tagWidth.' '.$tagHeight.' '.$attribute.' '.$tagSrcSet.' '.$tagPriority.'>';
             }
 
             return $imgTag;
