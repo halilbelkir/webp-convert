@@ -14,7 +14,7 @@ use Intervention\Image\ImageManager;
 
 class ImageHelper
 {
-    private static $browserList = ['Chrome' => 8, 'Mozilla' => 64, 'Safari' => '13.2', 'Opera' => '10.2', 'Edge' => 17, 'Android' => 3];
+    private static $browserList = ['Chrome' => 9, 'Firefox' => 64, 'Safari' => 13, 'Opera' => 11, 'Edge' => 17, 'Android' => 4, 'iPhone' => 13, 'iPad' => 13, 'iPod' => 13, 'SamsungBrowser' => 4, 'Brave' => 1, 'UCBrowser' => 12];
 
     public static function getDisk()
     {
