@@ -266,8 +266,7 @@ class ImageHelper
             $filename = Str::slug($filename,'-');
         }
 
-        //return $filename.'-'.$newFileName.'.'.$extension;
-        return $filename.'.'.$extension;
+        return $filename.$newFileName.'.'.$extension;
     }
 
     public static function getStringImgList($string):array
