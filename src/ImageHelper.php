@@ -62,7 +62,12 @@ class ImageHelper
     {
         try
         {
-            $image     = !empty($image) ? $image : config('img-webp-convert.no-image');
+            if (empty($image))
+            {
+                $image  = config('img-webp-convert.no-image');
+                $status = null;
+            }
+
             $imageInfo = pathinfo($image);
             //Uygun uzantıyı bul
             $extension = self::suitableExtension($imageInfo);
