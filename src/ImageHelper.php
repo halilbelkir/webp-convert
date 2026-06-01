@@ -60,6 +60,24 @@ class ImageHelper
 
     public static function createTag($image,$param=[],$attr=[],$type='',$name = null,$status=null,$priority = null)
     {
+        $cacheKey = 'webptag_'.md5(json_encode([$image,$param,$attr,$type,$name,$status,$priority]));
+
+        $cached = \Illuminate\Support\Facades\Cache::get($cacheKey);
+
+        if ($cached !== null)
+        {
+            return $cached;
+        }
+
+        $result = (string) self::buildTag($image,$param,$attr,$type,$name,$status,$priority);
+
+        \Illuminate\Support\Facades\Cache::put($cacheKey, $result, now()->addDays(30));
+
+        return $result;
+    }
+
+    public static function buildTag($image,$param=[],$attr=[],$type='',$name = null,$status=null,$priority = null)
+    {
         try
         {
             if (empty($image))
